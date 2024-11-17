@@ -1,4 +1,3 @@
-# tests/test_circle.py
 
 import pytest
 from circle import Circle
