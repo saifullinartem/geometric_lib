@@ -1,6 +1,6 @@
 # tests/test_triangle.py
 import pytest
-import triangle
+from triangle import Triangle
 
 # Тест для периметра треугольника
 def test_triangle_perimeter():
