@@ -1,7 +1,14 @@
 
-def area(a):
-    return a * a
+class Square:
+    def __init__(self, side_length):
+        if not isinstance(side_length, (int, float)):
+            raise TypeError("Side length must be a number.")
+        if side_length < 0:
+            raise ValueError("Side length cannot be negative.")
+        self.side_length = side_length
 
+    def perimeter(self):
+        return 4 * self.side_length
 
-def perimeter(a):
-    return 4 * a
+    def area(self):
+        return self.side_length ** 2
