@@ -1,10 +1,13 @@
 import math
 
+class Circle:
+    def __init__(self, radius):
+        if radius < 0:
+            raise ValueError("Radius cannot be negative.")
+        self.radius = radius
 
-def area(r):
-    return math.pi * r * r
+    def perimeter(self):
+        return 2 * math.pi * self.radius
 
-
-def perimeter(r):
-    return 2 * math.pi * r
-
+    def area(self):
+        return math.pi * self.radius ** 2
