@@ -7,7 +7,7 @@ on:
       - release
   pull_request:
     branches:
-      - master
+      - main
       - release
       - develop
 
@@ -18,31 +18,42 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      FULL_NAME: "Непипенко Егор Олегович"
+      GROUP: "M3114"
+
     steps:
-    - name: Print user information 
-      run: |
-        echo "Full Name: Непипенко Егор Олегович"
-        echo "Group: M3114"
-        echo "GitHub Ник: ${{ github.actor }}"
+      - name: Checkout repository
+        run: |
+          echo "Full Name: $FULL_NAME$"
+          echo "Group: $GROUP$"
+          echo "GitHub Ник: ${{ github.actor }}"
 
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.13
-
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
 
     
-    - name: Run tests
-      run: |
-        pytest
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-   
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8 .
+    
+      - name: Run tests
+        run: |
+          pytest
+  
+     
+      - name: Check code style with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Format code with black
+        if: failure()
+          pip install black
+          black .
+          
+     
