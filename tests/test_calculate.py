@@ -1,36 +1,67 @@
-# tests/test_calculate.py
+
 import pytest
-from calculate import calc
+from calculate import Calculator
 
-# Тест для некорректной фигуры
-def test_invalid_figure():
-    with pytest.raises(ValueError):
-        calc('triangle', 'area', [3])  # Нужно передать 3 стороны для треугольника
+def test_calculator_add():
+    calculator = Calculator()
+    a = 2
+    b = 3
+    expected = 5
 
-# Тест для некорректного количества параметров для круга
-def test_invalid_size_circle():
-    with pytest.raises(ValueError):
-        calc('circle', 'area', [1, 2])  # Ошибка: Круг требует только 1 параметр (радиус)
+    result = calculator.add(a, b)
 
-# Тест для некорректного количества параметров для квадрата
-def test_invalid_size_square():
-    with pytest.raises(ValueError):
-        calc('square', 'area', [1, 2])  # Ошибка: Квадрат требует только 1 параметр (сторона)
+    
+    assert result == expected, f"Expected {expected}, got {result}"
 
-# Тест для некорректного количества параметров для треугольника (площадь)
-# Тест для некорректного количества параметров для треугольника (площадь)
-def test_invalid_size_triangle_area():
-    with pytest.raises(ValueError):
-        calc('triangle', 'area', [3])  # Ошибка: нужно передать 3 стороны для треугольника
-  # Нужно передать 3 стороны для треугольника
+def test_calculator_subtract():
+    calculator = Calculator()
+    a = 5
+    b = 3
+    expected = 2
 
-# Тест для некорректного количества параметров для треугольника (периметр)
-def test_invalid_size_triangle_perimeter():
-    with pytest.raises(ValueError):
-        calc('triangle', 'perimeter', [3])  # Нужно передать 3 стороны для периметра
+    result = calculator.subtract(a, b)
 
-# Тест для неправильной функции
-# Тест для неправильной функции
-def test_invalid_function():
+    assert result == expected, f"Expected {expected}, got {result}"
+
+def test_calculator_multiply():
+    calculator = Calculator()
+    a = 4
+    b = 3
+    expected = 12
+
+    result = calculator.multiply(a, b)
+
+    assert result == expected, f"Expected {expected}, got {result}"
+
+def test_calculator_divide():
+    calculator = Calculator()
+    a = 10
+    b = 2
+    expected = 5
+
+    result = calculator.divide(a, b)
+
+    assert result == expected, f"Expected {expected}, got {result}"
+
+def test_calculator_divide_by_zero():
+    calculator = Calculator()
+    a = 10
+    b = 0
+
     with pytest.raises(ValueError):
-        calc('circle', 'volume', [3])  # Ошибка, так как функции "volume" нет для круга
+        calculator.divide(a, b)
+
+def test_calculator_invalid_input():
+    calculator = Calculator()
+
+    with pytest.raises(TypeError):
+        calculator.add("two", 3)
+
+    with pytest.raises(TypeError):
+        calculator.subtract(5, None)
+
+    with pytest.raises(TypeError):
+        calculator.multiply(4, "three")
+
+    with pytest.raises(TypeError):
+        calculator.divide("ten", 2)
