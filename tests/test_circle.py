@@ -1,6 +1,6 @@
 # tests/test_circle.py
 import pytest
-from circle import circle
+from circle import Circle
 
 # Тест для периметра круга
 def test_circle_perimeter():
