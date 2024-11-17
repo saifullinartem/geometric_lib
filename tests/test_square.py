@@ -1,6 +1,6 @@
 # tests/test_square.py
 import pytest
-import square
+from square import square
 
 # Тест для периметра квадрата
 def test_square_perimeter():
