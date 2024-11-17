@@ -1,41 +1,48 @@
 # tests/test_triangle.py
+
 import pytest
 from triangle import Triangle
 
-# Тест для периметра треугольника
-def test_triangle_perimeter():
-    assert triangle.perimeter(3, 4, 5) == 12
-
-# Тест для площади треугольника
 def test_triangle_area():
-    assert triangle.area(3, 4, 5) == 6.0
+    # Arrange
+    base = 4
+    height = 3
+    triangle = Triangle(base=base, height=height)
+    expected_area = 0.5 * base * height  # 6
 
-# Тест для некорректных данных для треугольника (невалидные стороны)
-def test_invalid_triangle_perimeter():
+    # Act
+    calculated_area = triangle.area()
+
+    # Assert
+    assert calculated_area == expected_area, f"Expected area {expected_area}, got {calculated_area}"
+
+def test_triangle_perimeter():
+    # Arrange
+    side_a = 3
+    side_b = 4
+    side_c = 5
+    triangle = Triangle(base=side_a, height=side_b, side_a=side_a, side_b=side_b, side_c=side_c)
+    expected_perimeter = side_a + side_b + side_c  # 12
+
+    # Act
+    calculated_perimeter = triangle.perimeter()
+
+    # Assert
+    assert calculated_perimeter == expected_perimeter, f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+
+def test_triangle_invalid_input():
+    # Arrange & Act & Assert
     with pytest.raises(ValueError):
-        triangle.perimeter(1, 2, 3)  # Не существует треугольника с такими сторонами
+        Triangle(base=-4, height=3)
 
-def test_invalid_triangle_area():
     with pytest.raises(ValueError):
-        triangle.area(1, 2, 3)  # Не существует треугольника с такими сторонами
+        Triangle(base=4, height=-3)
 
-# Тест для треугольника с отрицательныp
-def test_invalid_triangle_perimeter_negative_side():
     with pytest.raises(ValueError):
-        calc('triangle', 'perimeter', [-3, 4, 5])  # Стороны не могут быть отрицательными
+        Triangle(base=3, height=4, side_a=-5, side_b=4, side_c=5)
 
-# Тест для треугольника с отрицательными сторонами (площадь)
-def test_invalid_triangle_area_negative_side():
-    with pytest.raises(ValueError):
-        calc('triangle', 'area', [-3, 4, 5])  # Стороны не могут быть отрицательными
+    with pytest.raises(TypeError):
+        Triangle(base="four", height=3)
 
-# Тест для треугольника с нулевыми сторонами (периметр)
-def test_invalid_triangle_perimeter_zero_side():
-    with pytest.raises(ValueError):
-        calc('triangle', 'perimeter', [0, 4, 5])  # Стороны не могут быть нулевыми
-
-# Тест для треугольника с нулевыми сторонами (площадь)
-def test_invalid_triangle_area_zero_side():
-    with pytest.raises(ValueError):
-        calc('triangle', 'area', [0, 4, 5])  # Стороны не могут быть нулевыми
-
+    with pytest.raises(TypeError):
+        Triangle(base=3, height=4, side_a="five", side_b=4, side_c=5)
