@@ -1,19 +1,36 @@
-# tests/test_square.py
+
+
 import pytest
 from square import Square
 
-# Тест для периметра квадрата
-def test_square_perimeter():
-    assert square.perimeter(4) == 16
-
-# Тест для площади квадрата
 def test_square_area():
-    assert square.area(4) == 16
+    # Arrange
+    side_length = 4
+    square = Square(side_length=side_length)
+    expected_area = side_length ** 2  # 16
 
-# Тест для некорректных данных (отрицательная сторона)
+    # Act
+    calculated_area = square.area()
+
+    # Assert
+    assert calculated_area == expected_area, f"Expected area {expected_area}, got {calculated_area}"
+
+def test_square_perimeter():
+    # Arrange
+    side_length = 5
+    square = Square(side_length=side_length)
+    expected_perimeter = 4 * side_length  # 20
+
+    # Act
+    calculated_perimeter = square.perimeter()
+
+    # Assert
+    assert calculated_perimeter == expected_perimeter, f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+
 def test_square_invalid_input():
-    with pytest.raises(TypeError):
-        square.perimeter(-4)
+    # Arrange
+    with pytest.raises(ValueError):
+        Square(side_length=-4)
 
     with pytest.raises(TypeError):
-        square.area(-4)
+        Square(side_length="five")
