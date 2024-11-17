@@ -26,6 +26,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: List repository files
+        run: |
+          echo "Listing files in the current directory:"
+          ls -la
+          echo "Listing all files recursively:"
+          find . -type f
+
       - name: Print user information
         run: |
           echo "Full Name: $FULL_NAME$"
