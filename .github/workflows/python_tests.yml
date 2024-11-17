@@ -68,7 +68,7 @@ jobs:
     
       - name: Check code style with black
         run: |
-          pip install flake8
+          pip install black
           black .
 
       # - name: Format code with black
