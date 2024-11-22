@@ -1,16 +1,23 @@
 # geometric_lib/circle.py
-import math
 
+def area(radius: float) -> float:
+    """
+    Вычисляет площадь круга.
 
-def area(radius):
-    """Вычисляет площадь круга."""
-    if radius <= 0:
-        raise ValueError("Radius must be a positive number.")
-    return math.pi * radius**2
+    :param radius: Радиус круга
+    :return: Площадь круга
+    """
+    if radius < 0:
+        raise ValueError("Radius must be a non-negative number.")
+    return 3.14 * radius ** 2
 
+def perimeter(radius: float) -> float:
+    """
+    Вычисляет периметр круга.
 
-def perimeter(radius):
-    """Вычисляет периметр круга."""
-    if radius <= 0:
-        raise ValueError("Radius must be a positive number.")
-    return 2 * math.pi * radius
+    :param radius: Радиус круга
+    :return: Периметр круга
+    """
+    if radius < 0:
+        raise ValueError("Radius must be a non-negative number.")
+    return 2 * 3.14 * radius

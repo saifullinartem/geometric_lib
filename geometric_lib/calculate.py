@@ -1,55 +1,25 @@
-from circle import area as circle_area, perimeter as circle_perimeter
-from square import area as square_area, perimeter as square_perimeter
-from triangle import area as triangle_area, perimeter as triangle_perimeter
+# geometric_lib/calculate.py
 
+from geometric_lib.circle import area as circle_area, perimeter as circle_perimeter
 
-figs = ['circle', 'square', 'triangle']
-funcs = ['perimeter', 'area']
+def calculate_area(radius: float) -> float:
+    """
+    Вычисляет площадь круга по заданному радиусу.
 
-figures = {
-    'circle': {'area': circle_area, 'perimeter': circle_perimeter},
-    'square': {'area': square_area, 'perimeter': square_perimeter},
-    'triangle': {'area': triangle_area, 'perimeter': triangle_perimeter}
-}
+    :param radius: Радиус круга
+    :return: Площадь круга
+    """
+    if radius < 0:
+        raise ValueError("Radius must be a non-negative number.")
+    return circle_area(radius)
 
-sizes = {
-    'circle-area': 1,
-    'circle-perimeter': 1,
-    'square-area': 1,
-    'square-perimeter': 1,
-    'triangle-area': 3,
-    'triangle-perimeter': 3
-}
+def calculate_perimeter(radius: float) -> float:
+    """
+    Вычисляет периметр (длину окружности) круга по заданному радиусу.
 
-
-def calc(fig, func, size):
-    assert fig in figs, f"Unknown figure: {fig}"
-    assert func in funcs, f"Unknown function: {func}"
-
-    key = f'{fig}-{func}'
-    assert len(size) == sizes[key], f"Invalid size for {fig} {func}"
-
-    return figures[fig][func](*size)
-
-
-if __name__ == "__main__":
-    func = ''
-    fig = ''
-    size = []
-
-    while fig not in figs:
-        fig = input(f"Enter figure name, available are {figs}: \n")
-
-    while func not in funcs:
-        func = input(f"Enter function name, available are {funcs}: \n")
-
-    while len(size) != sizes.get(f"{fig}-{func}", 1):
-        size = list(
-            map(
-                int,
-                input("Input figure sizes separated by space\n").split()
-            )
-        )
-
-    result = calc(fig, func, size)
-    print(f"Result: {result}")
+    :param radius: Радиус круга
+    :return: Периметр круга
+    """
+    if radius < 0:
+        raise ValueError("Radius must be a non-negative number.")
+    return circle_perimeter(radius)

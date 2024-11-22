@@ -1,20 +1,26 @@
-# triangle.py
-import math
+# geometric_lib/triangle.py
 
+def area(base: float, height: float) -> float:
+    """
+    Вычисляет площадь треугольника.
 
-def area(a, b, c):
-    """Вычисляет площадь треугольника по формуле Герона."""
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Sides must be positive numbers.")
-    s = (a + b + c) / 2
-    # Проверка существования треугольника
-    if a + b <= c or a + c <= b or b + c <= a:
-        raise ValueError("Invalid triangle sides.")
-    return math.sqrt(s * (s - a) * (s - b) * (s - c))
+    :param base: Основание треугольника
+    :param height: Высота треугольника
+    :return: Площадь треугольника
+    """
+    if base < 0 or height < 0:
+        raise ValueError("Base and height must be non-negative numbers.")
+    return 0.5 * base * height
 
+def perimeter(side1: float, side2: float, side3: float) -> float:
+    """
+    Вычисляет периметр треугольника.
 
-def perimeter(a, b, c):
-    """Вычисляет периметр треугольника."""
-    if a <= 0 or b <= 0 or c <= 0:
-        raise ValueError("Sides must be positive numbers.")
-    return a + b + c
+    :param side1: Длина первой стороны
+    :param side2: Длина второй стороны
+    :param side3: Длина третьей стороны
+    :return: Периметр треугольника
+    """
+    if side1 < 0 or side2 < 0 or side3 < 0:
+        raise ValueError("All sides must be non-negative numbers.")
+    return side1 + side2 + side3
