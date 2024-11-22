@@ -1,6 +1,7 @@
-import unittest
-import math
-from geometric_lib import circle
+import unittest # noqa: F401
+import math # noqa: F401
+from geometric_lib import circle # noqa: F401
+
 
 class TestCircle(unittest.TestCase):
     def test_area_positive_radius(self):

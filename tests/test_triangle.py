@@ -1,6 +1,7 @@
-import unittest
-import math
-from geometric_lib import triangle
+import unittest # noqa: F401
+import math # noqa: F401
+from geometric_lib import triangle # noqa: F401
+
 
 class TestTriangle(unittest.TestCase):
     def test_perimeter_positive_sides(self):

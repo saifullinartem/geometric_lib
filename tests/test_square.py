@@ -1,6 +1,7 @@
 # tests/test_square.py
-import unittest
-from geometric_lib import square
+import unittest # noqa: F401
+from geometric_lib import square # noqa: F401
+
 
 class TestSquare(unittest.TestCase):
     def test_area_positive_side(self):
