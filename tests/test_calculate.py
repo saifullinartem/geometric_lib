@@ -1,6 +1,6 @@
 # tests/test_calculate.py
 import unittest
-from geometric_lib import calculate
+from calculate import calc
 
 
 class TestCalculate(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestCalculate(unittest.TestCase):
         expected = 78.53981633974483  # π * 5^2
 
         # Act
-        result = calculate.calc(fig, func, size)
+        result = calc(fig, func, size)
 
         # Assert
         self.assertAlmostEqual(result, expected, places=4)
@@ -29,7 +29,7 @@ class TestCalculate(unittest.TestCase):
         expected = 16  # 4 * 4
 
         # Act
-        result = calculate.calc(fig, func, size)
+        result = calc(fig, func, size)
 
         # Assert
         self.assertEqual(result, expected)
@@ -43,7 +43,7 @@ class TestCalculate(unittest.TestCase):
         expected = 6.0  # Площадь треугольника 3,4,5 по формуле Герона
 
         # Act
-        result = calculate.calc(fig, func, size)
+        result = calc(fig, func, size)
 
         # Assert
         self.assertAlmostEqual(result, expected, places=4)
@@ -57,7 +57,7 @@ class TestCalculate(unittest.TestCase):
 
         # Act & Assert
         with self.assertRaises(ValueError) as context:
-            calculate.calc(fig, func, size)
+            calc(fig, func, size)
         self.assertIn("Figure 'hexagon' is not supported.", str(context.exception))
 
     def test_calc_invalid_function(self):
@@ -69,7 +69,7 @@ class TestCalculate(unittest.TestCase):
 
         # Act & Assert
         with self.assertRaises(ValueError) as context:
-            calculate.calc(fig, func, size)
+            calc(fig, func, size)
         self.assertIn("Function 'volume' is not supported.", str(context.exception))
 
     def test_calc_invalid_size(self):
@@ -81,7 +81,7 @@ class TestCalculate(unittest.TestCase):
 
         # Act & Assert
         with self.assertRaises(ValueError) as context:
-            calculate.calc(fig, func, size)
+            calc(fig, func, size)
         self.assertIn("expects 3 parameter(s)", str(context.exception))
 
     def test_calc_negative_size(self):
@@ -93,7 +93,7 @@ class TestCalculate(unittest.TestCase):
 
         # Act & Assert
         with self.assertRaises(ValueError):
-            calculate.calc(fig, func, size)
+            calc(fig, func, size)
 
 
 if __name__ == '__main__':

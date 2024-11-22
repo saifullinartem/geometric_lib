@@ -6,7 +6,7 @@ def area(radius):
     """Вычисляет площадь круга."""
     if radius <= 0:
         raise ValueError("Radius must be a positive number.")
-    return math.pi * radius ** 2
+    return math.pi * radius**2
 
 
 def perimeter(radius):

@@ -1,4 +1,4 @@
-# geometric_lib/triangle.py
+# triangle.py
 import math
 
 

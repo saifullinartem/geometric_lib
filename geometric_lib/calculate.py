@@ -1,5 +1,8 @@
-# geometric_lib/calculate.py
-from geometric_lib import circle, square, triangle  # noqa: F401
+# calculate.py
+
+from circle import area as circle_area, perimeter as circle_perimeter  # noqa: F401
+from square import area as square_area, perimeter as square_perimeter  # noqa: F401
+from triangle import area as triangle_area, perimeter as triangle_perimeter  # noqa: F401
 
 figs = ['circle', 'square', 'triangle']
 funcs = ['perimeter', 'area']
@@ -23,7 +26,9 @@ def calc(fig, func, size):
 
     expected_size = sizes.get(f"{func}-{fig}")
     if expected_size is None:
-        raise ValueError(f"Function '{func}' is not supported for figure '{fig}'.")
+        raise ValueError(
+            f"Function '{func}' is not supported for figure '{fig}'."
+        )
     if len(size) != expected_size:
         raise ValueError(
             f"Function '{func}' for figure '{fig}' expects {expected_size} parameter(s)."
@@ -31,13 +36,12 @@ def calc(fig, func, size):
 
     # Используем словарь вместо eval для безопасности
     function_map = {
-        'circle': circle,
-        'square': square,
-        'triangle': triangle
+        'circle': circle_perimeter if func == 'perimeter' else circle_area,
+        'square': square_perimeter if func == 'perimeter' else square_area,
+        'triangle': triangle_perimeter if func == 'perimeter' else triangle_area
     }
 
-    selected_module = function_map[fig]
-    selected_function = getattr(selected_module, func)
+    selected_function = function_map[fig]
     return selected_function(*size)
 
 
@@ -47,17 +51,18 @@ if __name__ == "__main__":
     size = list()
 
     while fig not in figs:
-        fig = input(f"Enter figure name, available are {figs}:\n")
+        fig = input(f"Enter figure name, available are {figs}:\n").strip().lower()
 
     while func not in funcs:
-        func = input(f"Enter function name, available are {funcs}:\n")
+        func = input(f"Enter function name, available are {funcs}:\n").strip().lower()
 
     expected_size = sizes.get(f"{func}-{fig}", 1)
     while len(size) != expected_size:
         try:
-            size = list(map(float, input(
+            size_input = input(
                 f"Input figure sizes separated by space, {expected_size} parameter(s) required:\n"
-            ).split()))
+            )
+            size = list(map(float, size_input.split()))
         except ValueError:
             print("Please enter valid numbers.")
             size = []
