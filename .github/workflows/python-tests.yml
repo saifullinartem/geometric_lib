@@ -41,7 +41,7 @@ jobs:
 
       - name: Lint Code with flake8
         run: |
-          flake8 geometric_lib tests
+          flake8 . testss
 
       - name: Run Tests with unittest
         run: |
