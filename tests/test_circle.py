@@ -11,7 +11,7 @@ class TestCircle(unittest.TestCase):
         """Тестирование вычисления площади круга с положительным радиусом."""
         # Arrange
         radius = 5
-        expected_area = math.pi * radius ** 2
+        expected_area = math.pi * radius**2
 
         # Act
         result = area(radius)
@@ -50,5 +50,5 @@ class TestCircle(unittest.TestCase):
             perimeter(radius)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

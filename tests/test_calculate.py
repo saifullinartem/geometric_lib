@@ -9,8 +9,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_circle_area(self):
         """Тестирование вычисления площади круга."""
         # Arrange
-        fig = 'circle'
-        func = 'area'
+        fig = "circle"
+        func = "area"
         size = [5]
         expected = 78.53981633974483  # π * 5^2
 
@@ -23,8 +23,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_square_perimeter(self):
         """Тестирование вычисления периметра квадрата."""
         # Arrange
-        fig = 'square'
-        func = 'perimeter'
+        fig = "square"
+        func = "perimeter"
         size = [4]
         expected = 16  # 4 * 4
 
@@ -37,8 +37,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_triangle_area(self):
         """Тестирование вычисления площади треугольника."""
         # Arrange
-        fig = 'triangle'
-        func = 'area'
+        fig = "triangle"
+        func = "area"
         size = [3, 4, 5]
         expected = 6.0  # Площадь треугольника 3,4,5 по формуле Герона
 
@@ -51,8 +51,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_invalid_figure(self):
         """Тестирование обработки несуществующей фигуры."""
         # Arrange
-        fig = 'hexagon'
-        func = 'area'
+        fig = "hexagon"
+        func = "area"
         size = [6]
 
         # Act & Assert
@@ -63,8 +63,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_invalid_function(self):
         """Тестирование обработки несуществующей функции."""
         # Arrange
-        fig = 'circle'
-        func = 'volume'
+        fig = "circle"
+        func = "volume"
         size = [5]
 
         # Act & Assert
@@ -75,8 +75,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_invalid_size(self):
         """Тестирование обработки неверного количества параметров."""
         # Arrange
-        fig = 'triangle'
-        func = 'area'
+        fig = "triangle"
+        func = "area"
         size = [3, 4]  # Требуется 3 параметра
 
         # Act & Assert
@@ -87,8 +87,8 @@ class TestCalculate(unittest.TestCase):
     def test_calc_negative_size(self):
         """Тестирование обработки отрицательных значений параметров."""
         # Arrange
-        fig = 'circle'
-        func = 'area'
+        fig = "circle"
+        func = "area"
         size = [-5]
 
         # Act & Assert
@@ -96,5 +96,5 @@ class TestCalculate(unittest.TestCase):
             calc(fig, func, size)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
