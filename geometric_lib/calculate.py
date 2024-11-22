@@ -10,11 +10,11 @@ from triangle import (
 figs = ["circle", "square", "triangle"]
 funcs = ["perimeter", "area"]
 sizes = {
-    "perimeter-circle" : 1,
+    "perimeter-circle": 1,
     "area-circle": 1,
-    "perimeter-square" : 1,
+    "perimeter-square": 1,
     "area-square": 1,
-    "perimeter-triangle" : 3,
+    "perimeter-triangle": 3,
     "area-triangle": 3,
 }
 
@@ -37,16 +37,16 @@ def calc(fig, func, size):
 
     # Используем словарь вместо eval для безопасности
     function_map = {
-        "circle" : circle_perimeter if func == "perimeter" else circle_area,
-        "square" : square_perimeter if func == "perimeter" else square_area,
-        "triangle" : triangle_perimeter if func == "perimeter" else triangle_area,
+        "circle": circle_perimeter if func == "perimeter" else circle_area,
+        "square": square_perimeter if func == "perimeter" else square_area,
+        "triangle": triangle_perimeter if func == "perimeter" else triangle_area,
     }
 
     selected_function = function_map[fig]
     return selected_function(*size)
 
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     func = ""
     fig = ""
     size = list()
