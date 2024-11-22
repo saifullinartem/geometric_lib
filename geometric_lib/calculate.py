@@ -8,11 +8,11 @@ figs = ['circle', 'square', 'triangle']
 funcs = ['perimeter', 'area']
 sizes = {
     'perimeter-circle': 1,
-    'area-circle': 1,
-    'perimeter-square': 1,
-    'area-square': 1,
-    'perimeter-triangle': 3,
-    'area-triangle': 3
+    'area-circle' : 1,
+    'perimeter-square' : 1,
+    'area-square' : 1,
+    'perimeter-triangle' : 3,
+    'area-triangle' : 3
 }
 
 
