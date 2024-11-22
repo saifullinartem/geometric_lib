@@ -1,0 +1,48 @@
+name: Python Tests and Linting
+
+on:
+  push:
+    branches:
+      - master
+      - release/**
+  pull_request:
+    branches:
+      - master
+      - release/**
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      FULL_NAME: "Сайфуллин Артём Артурович"
+      GROUP_NUMBER: "M3114"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Output User Info
+        run: |
+          echo "Saifullin Artem"
+          echo "M3114"
+          echo "saifullinartem"
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'  
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint Code with flake8
+        run: |
+          flake8 geometric_lib tests
+
+      - name: Run Tests with unittest
+        run: |
+          python -m unittest discover -s tests
