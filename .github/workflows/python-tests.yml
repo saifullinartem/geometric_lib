@@ -41,7 +41,7 @@ jobs:
 
       - name: Lint Code with flake8
         run: |
-          flake8 . testss
+          flake8 . tests
 
       - name: Run Tests with unittest
         run: |
