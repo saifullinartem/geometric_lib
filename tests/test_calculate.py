@@ -1,7 +1,7 @@
 # tests/test_calculate.py
 
 import unittest
-from calculate import calculate_area, calculate_perimeter
+from calculate.py import calculate_area, calculate_perimeter
 
 class TestCalculate(unittest.TestCase):
     def test_calculate_area_positive_radius(self):

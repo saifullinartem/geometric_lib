@@ -1,7 +1,7 @@
 # tests/test_circle.py
 
 import unittest
-from circle import area, perimeter
+from circle.py import area, perimeter
 
 class TestCircle(unittest.TestCase):
     def test_area_positive_radius(self):
