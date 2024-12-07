@@ -1,7 +1,7 @@
 # tests/test_triangle.py
 
 import unittest
-from triangle.py import area, perimeter
+from geometric_lib.triangle import area, perimeter
 
 class TestTriangle(unittest.TestCase):
     def test_area_positive_base_height(self):

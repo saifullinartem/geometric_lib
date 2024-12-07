@@ -1,7 +1,7 @@
 # tests/test_square.py
 
 import unittest
-from square.py import area, perimeter
+from geometric_lib.square import area, perimeter
 
 class TestSquare(unittest.TestCase):
     def test_area_positive_side(self):
