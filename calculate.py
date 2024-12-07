@@ -1,6 +1,6 @@
 # geometric_lib/calculate.py
 
-from geometric_lib.circle import area as circle_area, perimeter as circle_perimeter
+from circle import area as circle_area, perimeter as circle_perimeter
 
 def calculate_area(radius: float) -> float:
     """
