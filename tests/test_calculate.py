@@ -1,6 +1,6 @@
 import unittest
 import math
-from calculate import calculate_area, calculate_perimeter, calc
+from .calculate import calculate_area, calculate_perimeter, calc
 
 class TestCalculate(unittest.TestCase):
 
