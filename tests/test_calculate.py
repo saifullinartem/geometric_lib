@@ -1,41 +1,87 @@
+import unittest
 import math
-from circle import area as circle_area, perimeter as circle_perimeter
-from square import area as square_area, perimeter as square_perimeter
-from triangle import area as triangle_area, perimeter as triangle_perimeter
+from calculate import calculate_area, calculate_perimeter, calc
 
-def calc(args):
-    shape = args.get('shape')
-    if shape == 'circle':
-        radius = args.get('radius')
-        if radius is None:
-            raise ValueError("Radius is required for circle.")
-        if radius < 0:
-            raise ValueError("Radius cannot be negative.")
-        return {
-            'area': circle_area(radius),
-            'perimeter': circle_perimeter(radius)
+class TestCalculate(unittest.TestCase):
+
+    def test_calculate_area_valid_circle(self):
+        # Arrange
+        input_data = {'shape': 'circle', 'radius': 5}
+        expected = math.pi * 5 ** 2  # Площадь круга с радиусом 5
+
+        # Act
+        result = calculate_area(input_data['radius'])
+
+        # Assert
+        self.assertAlmostEqual(result, expected, places=2)
+
+    def test_calculate_area_invalid_circle(self):
+        # Arrange
+        input_data = {'shape': 'circle', 'radius': -5}
+
+        # Act & Assert
+        with self.assertRaises(ValueError):
+            calculate_area(input_data['radius'])
+
+    def test_calculate_perimeter_valid_circle(self):
+        # Arrange
+        input_data = {'shape': 'circle', 'radius': 3}
+        expected = 2 * math.pi * 3  # Периметр круга с радиусом 3
+
+        # Act
+        result = calculate_perimeter(input_data['radius'])
+
+        # Assert
+        self.assertAlmostEqual(result, expected, places=2)
+
+    def test_calculate_perimeter_invalid_circle(self):
+        # Arrange
+        input_data = {'shape': 'circle', 'radius': -3}
+
+        # Act & Assert
+        with self.assertRaises(ValueError):
+            calculate_perimeter(input_data['radius'])
+
+    def test_calc_valid_input_circle(self):
+        # Arrange
+        args = {'shape': 'circle', 'radius': 3}
+        expected = {
+            'area': math.pi * 3 ** 2,
+            'perimeter': 2 * math.pi * 3
         }
-    elif shape == 'square':
-        side = args.get('side')
-        if side is None:
-            raise ValueError("Side is required for square.")
-        if side < 0:
-            raise ValueError("Side cannot be negative.")
-        return {
-            'area': square_area(side),
-            'perimeter': square_perimeter(side)
-        }
-    elif shape == 'triangle':
-        side1 = args.get('side1')
-        side2 = args.get('side2')
-        side3 = args.get('side3')
-        if None in (side1, side2, side3):
-            raise ValueError("All three sides are required for triangle.")
-        if side1 < 0 or side2 < 0 or side3 < 0:
-            raise ValueError("Sides cannot be negative.")
-        return {
-            'area': triangle_area(side1, side2, side3),
-            'perimeter': triangle_perimeter(side1, side2, side3)
-        }
-    else:
-        raise ValueError(f"Unknown shape: {shape}")
+
+        # Act
+        result = calc(args)
+
+        # Assert
+        self.assertAlmostEqual(result['area'], expected['area'], places=2)
+        self.assertAlmostEqual(result['perimeter'], expected['perimeter'], places=2)
+
+    def test_calc_invalid_input_circle_negative_radius(self):
+        # Arrange
+        args = {'shape': 'circle', 'radius': -3}
+
+        # Act & Assert
+        with self.assertRaises(ValueError):
+            calc(args)
+
+    def test_calc_valid_input_triangle(self):
+        # Arrange
+        args = {'shape': 'triangle', 'side1': 3, 'side2': 4, 'side3': 5}
+        expected_area = 6.0  # Площадь треугольника 3-4-5
+        expected_perimeter = 12.0
+
+        # Act
+        result = calc(args)
+
+        # Assert
+        self.assertAlmostEqual(result['area'], expected_area, places=2)
+        self.assertAlmostEqual(result['perimeter'], expected_perimeter, places=2)
+
+    def test_calc_invalid_input_triangle(self):
+        # Arrange
+        args = {'shape': 'triangle', 'side1': 1, 'side2': 2, 'side3': 3}  # Некорректный треугольник
+
+        # Act & Assert
+        with self.assertRaises(ValueError):
+            calc(args)
