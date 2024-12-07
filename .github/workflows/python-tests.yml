@@ -3,13 +3,18 @@ name: Python Tests and Linting
 on:
   push:
     branches:
-      - master
+      - main
+      - develop
+      - documentation
+      - feature
       - release/**
   pull_request:
     branches:
-      - master
-      - release/**
+      - main
       - develop
+      - documentation
+      - feature
+      - release/**
 
 jobs:
   build:
