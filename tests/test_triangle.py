@@ -1,6 +1,6 @@
 # tests/test_triangle.py
 
-import unittest
+import pytest
 from triangle import Triangle
 
 def test_triangle_area():
