@@ -1,50 +1,48 @@
-import unittest
-from .triangle import area, perimeter
+# tests/test_triangle.py
 
-class TestTriangle(unittest.TestCase):
+import pytest
+from triangle import Triangle
 
-    def test_perimeter_valid(self):
-        # Arrange
-        side1, side2, side3 = 3, 4, 5
-        expected = 12
+def test_triangle_area():
+    # Arrange
+    base = 4
+    height = 3
+    triangle = Triangle(base=base, height=height)
+    expected_area = 0.5 * base * height  # 6
 
-        # Act
-        result = perimeter(side1, side2, side3)
+    # Act
+    calculated_area = triangle.area()
 
-        # Assert
-        self.assertEqual(result, expected)
+    # Assert
+    assert calculated_area == expected_area, f"Expected area {expected_area}, got {calculated_area}"
 
-    def test_perimeter_invalid(self):
-        # Arrange
-        side1, side2, side3 = -3, 4, 5
+def test_triangle_perimeter():
+    # Arrange
+    side_a = 3
+    side_b = 4
+    side_c = 5
+    triangle = Triangle(base=side_a, height=side_b, side_a=side_a, side_b=side_b, side_c=side_c)
+    expected_perimeter = side_a + side_b + side_c  # 12
 
-        # Act & Assert
-        with self.assertRaises(ValueError):
-            perimeter(side1, side2, side3)
+    # Act
+    calculated_perimeter = triangle.perimeter()
 
-    def test_area_valid(self):
-        # Arrange
-        side1, side2, side3 = 3, 4, 5
-        expected = 6.0  # Площадь треугольника 3-4-5
+    # Assert
+    assert calculated_perimeter == expected_perimeter, f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
 
-        # Act
-        result = area(side1, side2, side3)
+def test_triangle_invalid_input():
+    # Arrange & Act & Assert
+    with pytest.raises(ValueError):
+        Triangle(base=-4, height=3)
 
-        # Assert
-        self.assertAlmostEqual(result, expected, places=2)
+    with pytest.raises(ValueError):
+        Triangle(base=4, height=-3)
 
-    def test_area_invalid_negative_side(self):
-        # Arrange
-        side1, side2, side3 = -3, 4, 5
+    with pytest.raises(ValueError):
+        Triangle(base=3, height=4, side_a=-5, side_b=4, side_c=5)
 
-        # Act & Assert
-        with self.assertRaises(ValueError):
-            area(side1, side2, side3)
+    with pytest.raises(TypeError):
+        Triangle(base="four", height=3)
 
-    def test_area_invalid_triangle(self):
-        # Arrange
-        side1, side2, side3 = 1, 2, 3  # Некорректный треугольник
-
-        # Act & Assert
-        with self.assertRaises(ValueError):
-            area(side1, side2, side3)
+    with pytest.raises(TypeError):
+        Triangle(base=3, height=4, side_a="five", side_b=4, side_c=5)
