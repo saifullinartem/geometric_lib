@@ -1,6 +1,6 @@
 
 
-import unittest
+import pytest
 from square import Square
 
 def test_square_area():
