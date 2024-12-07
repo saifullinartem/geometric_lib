@@ -1,20 +1,18 @@
-name: Python Tests and Linting
+name: CI Workflow
 
 on:
   push:
     branches:
       - main
-      - develop
-      - documentation
-      - feature
-      - release/**
+      - release
   pull_request:
     branches:
       - main
+      - release
       - develop
-      - documentation
-      - feature
-      - release/**
+
+  workflow_dispatch:
+
 
 jobs:
   build:
@@ -22,27 +20,22 @@ jobs:
 
     env:
       FULL_NAME: "Сайфуллин Артём Артурович"
-      GROUP_NUMBER: "M3114"
+      GROUP: "M3114"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Output User Info
+      - name: Print user information
         run: |
-          echo "Saifullin Artem"
-          echo "M3114"
-          echo "saifullinartem"
+          echo "Full Name: $FULL_NAME$"
+          echo "Group: $GROUP$"
+          echo "GitHub Ник: ${{ github.actor }}"
 
-      - name: Setup Python
+      - name: Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'  
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python-version: '3.13'
 
       - name: Cache pip
         uses: actions/cache@v3
@@ -52,11 +45,28 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
 
-
-      - name: Lint Code with black
+      - name: Create virtual environment
         run: |
-          black . tests
+          python -m venv venv
+          source venv/bin/activate
 
-      - name: Run Tests with unittest
+    
+      - name: Install dependencies
         run: |
-          python -m unittest discover -s tests
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+
+
+    
+      - name: Run tests
+        run: |
+          pytest
+  
+    
+      - name: Check code style with black
+        run: |
+          pip install black
+          black .
