@@ -1,7 +1,7 @@
 import math
-from geometric_lib.circle import area as circle_area, perimeter as circle_perimeter
-from geometric_lib.square import area as square_area, perimeter as square_perimeter
-from geometric_lib.triangle import area as triangle_area, perimeter as triangle_perimeter
+from circle import area as circle_area, perimeter as circle_perimeter
+from square import area as square_area, perimeter as square_perimeter
+from triangle import area as triangle_area, perimeter as triangle_perimeter
 
 def calc(args):
     shape = args.get('shape')
