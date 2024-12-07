@@ -1,31 +1,41 @@
-# tests/test_calculate.py
+import math
+from geometric_lib.circle import area as circle_area, perimeter as circle_perimeter
+from geometric_lib.square import area as square_area, perimeter as square_perimeter
+from geometric_lib.triangle import area as triangle_area, perimeter as triangle_perimeter
 
-import unittest
-
-from calculate import calculate_area, calculate_perimeter
-
-class TestCalculate(unittest.TestCase):
-    def test_calculate_area_positive_radius(self):
-        self.assertAlmostEqual(calculate_area(5), 78.5)
-        self.assertAlmostEqual(calculate_area(3.5), 38.465)
-    
-    def test_calculate_area_zero_radius(self):
-        self.assertEqual(calculate_area(0), 0)
-    
-    def test_calculate_area_negative_radius(self):
-        with self.assertRaises(ValueError):
-            calculate_area(-1)
-    
-    def test_calculate_perimeter_positive_radius(self):
-        self.assertAlmostEqual(calculate_perimeter(5), 31.4)
-        self.assertAlmostEqual(calculate_perimeter(3.5), 21.98)
-    
-    def test_calculate_perimeter_zero_radius(self):
-        self.assertEqual(calculate_perimeter(0), 0)
-    
-    def test_calculate_perimeter_negative_radius(self):
-        with self.assertRaises(ValueError):
-            calculate_perimeter(-1)
-
-if __name__ == '__main__':
-    unittest.main()
+def calc(args):
+    shape = args.get('shape')
+    if shape == 'circle':
+        radius = args.get('radius')
+        if radius is None:
+            raise ValueError("Radius is required for circle.")
+        if radius < 0:
+            raise ValueError("Radius cannot be negative.")
+        return {
+            'area': circle_area(radius),
+            'perimeter': circle_perimeter(radius)
+        }
+    elif shape == 'square':
+        side = args.get('side')
+        if side is None:
+            raise ValueError("Side is required for square.")
+        if side < 0:
+            raise ValueError("Side cannot be negative.")
+        return {
+            'area': square_area(side),
+            'perimeter': square_perimeter(side)
+        }
+    elif shape == 'triangle':
+        side1 = args.get('side1')
+        side2 = args.get('side2')
+        side3 = args.get('side3')
+        if None in (side1, side2, side3):
+            raise ValueError("All three sides are required for triangle.")
+        if side1 < 0 or side2 < 0 or side3 < 0:
+            raise ValueError("Sides cannot be negative.")
+        return {
+            'area': triangle_area(side1, side2, side3),
+            'perimeter': triangle_perimeter(side1, side2, side3)
+        }
+    else:
+        raise ValueError(f"Unknown shape: {shape}")
