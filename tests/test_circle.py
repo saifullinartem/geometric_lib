@@ -1,65 +1,32 @@
-import unittest
-import math
-from .circle import area, perimeter
 
-class TestCircle(unittest.TestCase):
+import pytest
+from circle import Circle
 
-    def test_area_positive_radius(self):
-        # Arrange
-        radius = 3
-        expected = math.pi * radius ** 2  # Площадь круга с радиусом 3
+def test_circle_perimeter():
+    radius = 3
+    circle = Circle(radius=radius)
+    expected_perimeter = 2 * 3.141592653589793 * radius  
 
-        # Act
-        result = area(radius)
+    calculated_perimeter = circle.perimeter()
 
-        # Assert
-        self.assertAlmostEqual(result, expected, places=2)
+    assert calculated_perimeter == pytest.approx(expected_perimeter, rel=1e-9), \
+        f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
 
-    def test_area_negative_radius(self):
-        # Arrange
-        radius = -5
+def test_circle_area():
+    radius = 3
+    circle = Circle(radius=radius)
+    expected_area = 3.141592653589793 * radius ** 2  
 
-        # Act & Assert
-        with self.assertRaises(ValueError):
-            area(radius)
+    calculated_area = circle.area()
 
-    def test_area_zero_radius(self):
-        # Arrange
-        radius = 0
-        expected = 0.0
+    assert calculated_area == pytest.approx(expected_area, rel=1e-9), \
+        f"Expected area {expected_area}, got {calculated_area}"
 
-        # Act
-        result = area(radius)
+def test_circle_invalid_input():
+    invalid_radius = -3
 
-        # Assert
-        self.assertEqual(result, expected)
+    with pytest.raises(ValueError):
+        Circle(radius=invalid_radius).perimeter()
 
-    def test_perimeter_positive_radius(self):
-        # Arrange
-        radius = 3
-        expected = 2 * math.pi * radius  # Периметр круга с радиусом 3
-
-        # Act
-        result = perimeter(radius)
-
-        # Assert
-        self.assertAlmostEqual(result, expected, places=2)
-
-    def test_perimeter_negative_radius(self):
-        # Arrange
-        radius = -5
-
-        # Act & Assert
-        with self.assertRaises(ValueError):
-            perimeter(radius)
-
-    def test_perimeter_zero_radius(self):
-        # Arrange
-        radius = 0
-        expected = 0.0
-
-        # Act
-        result = perimeter(radius)
-
-        # Assert
-        self.assertEqual(result, expected)
+    with pytest.raises(ValueError):
+        Circle(radius=invalid_radius).area()
