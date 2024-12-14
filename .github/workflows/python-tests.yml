@@ -1,0 +1,69 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - release
+  pull_request:
+    branches:
+      - main
+      - release
+      - develop
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      FULL_NAME: "Сайфуллин Артём Артурович"
+      GROUP: "M3114"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Print user information
+        run: |
+          echo "Full Name: $FULL_NAME"
+          echo "Group: $GROUP"
+          echo "GitHub Ник: ${{ github.actor }}"
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # Если pytest не указан в requirements.txt, установите его отдельно:
+          # pip install pytest
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+
+      - name: Verify pytest installation
+        run: |
+          pip list
+          which pytest
+          python -m pytest --version
+
+      - name: Run tests
+        run: |
+          python -m pytest
+
+      - name: Check code style with black
+        run: |
+          pip install black
+          black --check .
