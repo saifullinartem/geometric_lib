@@ -1,26 +1,45 @@
-class Calculator:
-    def add(self, a, b):
-        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-            raise TypeError("Operands must be numbers.")
-        return a + b
+# calculate.py
+import math
 
-    def subtract(self, a, b):
-        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-            raise TypeError("Operands must be numbers.")
-        return a - b
+def circle_area(radius: float) -> float:
+    """
+    Вычисляет площадь круга.
+    """
+    return math.pi * radius ** 2
 
-    def multiply(self, a, b):
-        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-            raise TypeError("Operands must be numbers.")
-        return a * b
+def circle_perimeter(radius: float) -> float:
+    """
+    Вычисляет периметр круга.
+    """
+    return 2 * math.pi * radius
 
-    def divide(self, a, b):
-        if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
-            raise TypeError("Operands must be numbers.")
-        if b == 0:
-            raise ValueError("Cannot divide by zero.")
-        return a / b
+def square_area(side: float) -> float:
+    """
+    Вычисляет площадь квадрата.
+    """
+    return side ** 2
 
+def square_perimeter(side: float) -> float:
+    """
+    Вычисляет периметр квадрата.
+    """
+    return 4 * side
+
+def triangle_area(side1: float, side2: float, side3: float) -> float:
+    """
+    Вычисляет площадь треугольника по формуле Герона.
+    """
+    s = (side1 + side2 + side3) / 2
+    area_squared = s * (s - side1) * (s - side2) * (s - side3)
+    if area_squared <= 0:
+        raise ValueError("Invalid triangle sides.")
+    return math.sqrt(area_squared)
+
+def triangle_perimeter(side1: float, side2: float, side3: float) -> float:
+    """
+    Вычисляет периметр треугольника.
+    """
+    return side1 + side2 + side3
 
 def calculate_area(radius: float) -> float:
     """
@@ -32,7 +51,6 @@ def calculate_area(radius: float) -> float:
         raise ValueError("Radius must be a non-negative number.")
     return circle_area(radius)
 
-
 def calculate_perimeter(radius: float) -> float:
     """
     Вычисляет периметр (длину окружности) круга по заданному радиусу.
@@ -42,7 +60,6 @@ def calculate_perimeter(radius: float) -> float:
     if radius < 0:
         raise ValueError("Radius must be a non-negative number.")
     return circle_perimeter(radius)
-
 
 def calc(args: dict) -> dict:
     """
@@ -78,4 +95,4 @@ def calc(args: dict) -> dict:
             "perimeter": triangle_perimeter(side1, side2, side3),
         }
     else:
-        raise ValueError(f"Unknown shape: {shape}")
+        raise ValueError(f"Unsupported shape: {shape}")

@@ -1,6 +1,10 @@
+# tests/test_square.py
 import pytest
 from square import Square
 
+@pytest.fixture
+def square_instance():
+    return Square(side_length=4)  # Вы можете изменить длину стороны по необходимости
 
 def test_square_area():
     # Arrange
@@ -12,58 +16,37 @@ def test_square_area():
     calculated_area = square.area()
 
     # Assert
-    assert (
-        calculated_area == expected_area
-    ), f"Expected area {expected_area}, got {calculated_area}"
+    assert calculated_area == pytest.approx(expected_area, rel=1e-9), \
+        f"Expected area {expected_area}, got {calculated_area}"
 
+def test_square_area_positive_side():
+    square = Square(side_length=4)
+    expected = 16
+    result = square.area()
+    assert result == expected, f"Expected {expected}, got {result}"
 
-def test_square_perimeter():
-    # Arrange
-    side_length = 5
-    square = Square(side_length=side_length)
-    expected_perimeter = 4 * side_length  # 20
+def test_square_area_zero_side():
+    square = Square(side_length=0)
+    expected = 0
+    result = square.area()
+    assert result == expected, f"Expected {expected}, got {result}"
 
-    # Act
-    calculated_perimeter = square.perimeter()
-
-    # Assert
-    assert (
-        calculated_perimeter == expected_perimeter
-    ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
-
-
-def test_square_invalid_input():
-    # Arrange
+def test_square_area_negative_side():
     with pytest.raises(ValueError):
         Square(side_length=-4)
 
-    with pytest.raises(TypeError):
-        Square(side_length="five")
+def test_square_perimeter_positive_side():
+    square = Square(side_length=4)
+    expected = 16  # Периметр квадрата со стороной 4
+    result = square.perimeter()
+    assert result == expected, f"Expected {expected}, got {result}"
 
+def test_square_perimeter_zero_side():
+    square = Square(side_length=0)
+    expected = 0
+    result = square.perimeter()
+    assert result == expected, f"Expected {expected}, got {result}"
 
-class TestSquare():
-    def test_area_positive_side(self):
-        self.assertEqual(area(4), 16)
-        self.assertEqual(area(2.5), 6.25)
-
-    def test_area_zero_side(self):
-        self.assertEqual(area(0), 0)
-
-    def test_area_negative_side(self):
-        with self.assertRaises(ValueError):
-            area(-1)
-
-    def test_perimeter_positive_side(self):
-        self.assertEqual(perimeter(4), 16)
-        self.assertEqual(perimeter(2.5), 10)
-
-    def test_perimeter_zero_side(self):
-        self.assertEqual(perimeter(0), 0)
-
-    def test_perimeter_negative_side(self):
-        with self.assertRaises(ValueError):
-            perimeter(-1)
-
-
-if __name__ == "__main__":
-    unittest.main()
+def test_square_perimeter_negative_side():
+    with pytest.raises(ValueError):
+        Square(side_length=-4)

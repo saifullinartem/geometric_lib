@@ -3,21 +3,20 @@ import pytest
 import math
 from circle import Circle
 
-
 @pytest.fixture
-def circle():
-    return Circle(radius=5)
-
+def circle_instance():
+    return Circle(radius=5)  # Вы можете изменить радиус по необходимости
 
 def test_circle_perimeter():
     radius = 3
     circle = Circle(radius=radius)
     expected_perimeter = 2 * math.pi * radius
+
     calculated_perimeter = circle.perimeter()
+
     assert calculated_perimeter == pytest.approx(
         expected_perimeter, rel=1e-9
     ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
-
 
 def test_area_positive_radius():
     # Arrange
@@ -33,7 +32,6 @@ def test_area_positive_radius():
         expected, rel=1e-9
     ), f"Expected area {expected}, got {calculated_area}"
 
-
 def test_circle_area():
     radius = 3
     circle = Circle(radius=radius)
@@ -44,7 +42,6 @@ def test_circle_area():
     assert calculated_area == pytest.approx(
         expected_area, rel=1e-9
     ), f"Expected area {expected_area}, got {calculated_area}"
-
 
 def test_circle_invalid_input():
     invalid_radius = -3
