@@ -1,20 +1,15 @@
-# circle.py
 import math
 
-class Circle:
-    def __init__(self, radius: float):
-        if radius < 0:
-            raise ValueError("Radius cannot be negative.")
-        self.radius = radius
+def is_number(value):
+    if not isinstance(value, (int, float)):
+        raise ValueError("Input must be a number")
+    if value < 0:
+        raise ValueError("Input must be greater than or equal to 0")
 
-    def area(self) -> float:
-        """
-        Вычисляет площадь круга.
-        """
-        return math.pi * self.radius ** 2
+def area(r):
+    is_number(r)
+    return math.pi * r * r
 
-    def perimeter(self) -> float:
-        """
-        Вычисляет периметр круга.
-        """
-        return 2 * math.pi * self.radius
+def perimeter(r):
+    is_number(r)
+    return 2 * math.pi * r

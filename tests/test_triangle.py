@@ -1,57 +1,53 @@
-# tests/test_triangle.py
-
 import pytest
-from triangle import Triangle
+import math
+from triangle import area, perimeter
 
+def test_area_with_valid_triangle():
+    a, b, c = 3, 4, 5
+    expected_result = 6.0
+    result = area(a, b, c)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-def test_triangle_area():
-    # Arrange
-    base = 4
-    height = 3
-    triangle = Triangle(base=base, height=height)
-    expected_area = 0.5 * base * height  # 6
+def test_area_with_float_triangle():
+    a, b, c = 2.5, 4.5, 5.5
+    p = (a + b + c) / 2
+    expected_result = math.sqrt(p * (p - a) * (p - b) * (p - c))
+    result = area(a, b, c)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-    # Act
-    calculated_area = triangle.area()
+def test_area_with_negative_side():
+    a, b, c = -3, 4, 5
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        area(a, b, c)
 
-    # Assert
-    assert (
-        calculated_area == expected_area
-    ), f"Expected area {expected_area}, got {calculated_area}"
+def test_area_with_invalid_type():
+    a, b, c = 3, "side", 5
+    with pytest.raises(ValueError, match="Input must be a number"):
+        area(a, b, c)
 
+def test_area_with_invalid_triangle():
+    a, b, c = 1, 2, 3  # Не может существовать треугольник с такими сторонами
+    with pytest.raises(ValueError, match="The provided sides do not form a valid triangle."):
+        area(a, b, c)
 
-def test_triangle_perimeter():
-    # Arrange
-    side_a = 3
-    side_b = 4
-    side_c = 5
-    triangle = Triangle(
-        base=side_a, height=side_b, side_a=side_a, side_b=side_b, side_c=side_c
-    )
-    expected_perimeter = side_a + side_b + side_c  # 12
+def test_perimeter_with_valid_triangle():
+    a, b, c = 3, 4, 5
+    expected_result = 12
+    result = perimeter(a, b, c)
+    assert result == expected_result, f"Expected {expected_result}, got {result}"
 
-    # Act
-    calculated_perimeter = triangle.perimeter()
+def test_perimeter_with_floats():
+    a, b, c = 2.5, 4.5, 5.5
+    expected_result = a + b + c
+    result = perimeter(a, b, c)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-    # Assert
-    assert (
-        calculated_perimeter == expected_perimeter
-    ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+def test_perimeter_with_negative_side():
+    a, b, c = 3, -4, 5
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        perimeter(a, b, c)
 
-
-def test_triangle_invalid_input():
-    # Arrange & Act & Assert
-    with pytest.raises(ValueError):
-        Triangle(base=-4, height=3)
-
-    with pytest.raises(ValueError):
-        Triangle(base=4, height=-3)
-
-    with pytest.raises(ValueError):
-        Triangle(base=3, height=4, side_a=-5, side_b=4, side_c=5)
-
-    with pytest.raises(TypeError):
-        Triangle(base="four", height=3)
-
-    with pytest.raises(TypeError):
-        Triangle(base=3, height=4, side_a="five", side_b=4, side_c=5)
+def test_perimeter_with_invalid_type():
+    a, b, c = 3, "side", 5
+    with pytest.raises(ValueError, match="Input must be a number"):
+        perimeter(a, b, c)

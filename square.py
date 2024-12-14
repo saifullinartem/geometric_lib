@@ -1,18 +1,15 @@
-# square.py
-class Square:
-    def __init__(self, side_length: float):
-        if side_length < 0:
-            raise ValueError("Side length cannot be negative.")
-        self.side_length = side_length
+def is_number(value):
+  if not isinstance(value, (int, float)):
+      raise ValueError("Input must be a number")
+  if value < 0:
+      raise ValueError("Input must be greater than or equal to 0")
 
-    def area(self) -> float:
-        """
-        Вычисляет площадь квадрата.
-        """
-        return self.side_length ** 2
+def area(a):
+  '''Принимает число a, возвращает число a в квадрате'''
+  is_number(a)
+  return a * a
 
-    def perimeter(self) -> float:
-        """
-        Вычисляет периметр квадрата.
-        """
-        return 4 * self.side_length
+def perimeter(a):
+  '''Принимает число a, возвращает 4 умноженное на a'''
+  is_number(a)
+  return 4 * a

@@ -1,117 +1,88 @@
-# calculate.py
-import math
+import circle
+import square
+import triangle
 
-class Calculator:
-    def add(self, a, b):
-        """Возвращает сумму двух чисел."""
-        return a + b
+figs = ['circle', 'square', 'triangle']
+funcs = ['perimeter', 'area']
+sizes = {
+        "perimeter-circle": 1,
+        "area-circle": 1,
+        "perimeter-square": 1,
+        "area-square": 1,
+        "perimeter-triangle": 3,
+        "area-triangle": 3,
+}
 
-    def subtract(self, a, b):
-        """Возвращает разность двух чисел."""
-        return a - b
-
-    def multiply(self, a, b):
-        """Возвращает произведение двух чисел."""
-        return a * b
-
-    def divide(self, a, b):
-        """Возвращает частное двух чисел. Выбрасывает ValueError при делении на ноль."""
-        if b == 0:
-            raise ValueError("Cannot divide by zero.")
-        return a / b
-
-def circle_area(radius: float) -> float:
-    """
-    Вычисляет площадь круга.
-    """
-    return math.pi * radius ** 2
-
-def circle_perimeter(radius: float) -> float:
-    """
-    Вычисляет периметр круга.
-    """
-    return 2 * math.pi * radius
-
-def square_area(side: float) -> float:
-    """
-    Вычисляет площадь квадрата.
-    """
-    return side ** 2
-
-def square_perimeter(side: float) -> float:
-    """
-    Вычисляет периметр квадрата.
-    """
-    return 4 * side
-
-def triangle_area(side1: float, side2: float, side3: float) -> float:
-    """
-    Вычисляет площадь треугольника по формуле Герона.
-    """
-    s = (side1 + side2 + side3) / 2
-    area_squared = s * (s - side1) * (s - side2) * (s - side3)
-    if area_squared <= 0:
-        raise ValueError("Invalid triangle sides.")
-    return math.sqrt(area_squared)
-
-def triangle_perimeter(side1: float, side2: float, side3: float) -> float:
-    """
-    Вычисляет периметр треугольника.
-    """
-    return side1 + side2 + side3
-
-def calculate_area(radius: float) -> float:
-    """
-    Вычисляет площадь круга по заданному радиусу.
-    :param radius: Радиус круга
-    :return: Площадь круга
-    """
-    if radius < 0:
-        raise ValueError("Radius must be a non-negative number.")
-    return circle_area(radius)
-
-def calculate_perimeter(radius: float) -> float:
-    """
-    Вычисляет периметр (длину окружности) круга по заданному радиусу.
-    :param radius: Радиус круга
-    :return: Периметр круга
-    """
-    if radius < 0:
-        raise ValueError("Radius must be a non-negative number.")
-    return circle_perimeter(radius)
-
-def calc(args: dict) -> dict:
-    """
-    Расчитывает площадь и периметр заданной геометрической фигуры.
-    :param args: Словарь с параметрами фигуры.
-    :return: Словарь с ключами 'area' и 'perimeter'.
-    """
-    shape = args.get("shape")
-    if shape == "circle":
-        radius = args.get("radius")
-        if radius is None:
-            raise ValueError("Radius is required for circle.")
-        if radius < 0:
-            raise ValueError("Radius cannot be negative.")
-        return {"area": circle_area(radius), "perimeter": circle_perimeter(radius)}
-    elif shape == "square":
-        side = args.get("side")
-        if side is None:
-            raise ValueError("Side is required for square.")
-        if side < 0:
-            raise ValueError("Side cannot be negative.")
-        return {"area": square_area(side), "perimeter": square_perimeter(side)}
-    elif shape == "triangle":
-        side1 = args.get("side1")
-        side2 = args.get("side2")
-        side3 = args.get("side3")
-        if None in (side1, side2, side3):
-            raise ValueError("All three sides are required for triangle.")
-        if side1 < 0 or side2 < 0 or side3 < 0:
-            raise ValueError("Sides cannot be negative.")
-        return {
-            "area": triangle_area(side1, side2, side3),
-            "perimeter": triangle_perimeter(side1, side2, side3),
+# Создаем словарь для безопасного вызова функций
+function_mapping = {
+        'circle': {
+                'perimeter': circle.perimeter,
+                'area': circle.area
+        },
+        'square': {
+                'perimeter': square.perimeter,
+                'area': square.area
+        },
+        'triangle': {
+                'perimeter': triangle.perimeter,
+                'area': triangle.area
         }
-    else:
-        raise ValueError(f"Unsupported shape: {shape}")
+}
+
+def calc(fig, func, size):
+        if fig not in figs:
+                raise ValueError(f"Figure {fig} is not supported. Available figures: {figs}")
+        if func not in funcs:
+                raise ValueError(f"Function {func} is not supported. Available functions: {funcs}")
+
+        expected_size = sizes.get(f"{func}-{fig}", 1)
+        if len(size) != expected_size:
+                raise ValueError(f"Invalid number of sizes for {fig} {func}: expected {expected_size}, got {len(size)}")
+
+        try:
+                # Безопасный вызов функции через словарь
+                result = function_mapping[fig][func](*size)
+        except Exception as e:
+                raise e
+
+        # Форматирование результата
+        if fig == 'circle':
+                if func == 'perimeter':
+                        operation_str = f"Perimeter of {fig} ({size[0]}) = {result:.2f}"
+                elif func == 'area':
+                        operation_str = f"Area of {fig} (π * {size[0]}^2) = {result:.2f}"
+        elif fig == 'square':
+                if func == 'perimeter':
+                        operation_str = f"Perimeter of {fig} ({size[0]}) = {result}"
+                elif func == 'area':
+                        operation_str = f"Area of {fig} ({size[0]} * {size[0]}) = {result}"
+        elif fig == 'triangle':
+                if func == 'perimeter':
+                        operation_str = f"Perimeter of {fig} ({' + '.join(map(str, size))}) = {result}"
+                elif func == 'area':
+                        operation_str = f"Area of {fig} (Heron's formula for sides {size[0]}, {size[1]}, {size[2]}) = {result:.2f}"
+        else:
+                operation_str = f"{func.capitalize()} of {fig} with size {', '.join(map(str, size))} = {result}"
+
+        return operation_str
+
+if __name__ == "__main__":
+        func = ''
+        fig = ''
+        size = []
+
+        while fig not in figs:
+                fig = input(f"Enter figure name, available are {figs}:\n").strip().lower()
+
+        while func not in funcs:
+                func = input(f"Enter function name, available are {funcs}:\n").strip().lower()
+
+        while len(size) != sizes.get(f"{func}-{fig}", 1):
+                try:
+                        size_input = input("Input figure sizes separated by space: ").strip()
+                        size = list(map(float, size_input.split()))
+                except ValueError:
+                        print("Please enter valid numbers.")
+
+        operation_str = calc(fig, func, size)
+        print(operation_str)

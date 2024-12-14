@@ -1,52 +1,46 @@
-# tests/test_square.py
 import pytest
-from square import Square
+from square import area, perimeter
 
-@pytest.fixture
-def square_instance():
-    return Square(side_length=4)  # Вы можете изменить длину стороны по необходимости
+def test_area_with_positive_integer():
+    input_value = 4
+    expected_result = 16
+    result = area(input_value)
+    assert result == expected_result, f"Expected {expected_result}, got {result}"
 
-def test_square_area():
-    # Arrange
-    side_length = 4
-    square = Square(side_length=side_length)
-    expected_area = side_length**2  # 16
+def test_area_with_float():
+    input_value = 2.5
+    expected_result = 6.25
+    result = area(input_value)
+    assert result == pytest.approx(expected_result), f"Expected {expected_result}, got {result}"
 
-    # Act
-    calculated_area = square.area()
+def test_area_with_negative_integer():
+    input_value = -3
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        area(input_value)
 
-    # Assert
-    assert calculated_area == pytest.approx(expected_area, rel=1e-9), \
-        f"Expected area {expected_area}, got {calculated_area}"
+def test_area_with_invalid_string():
+    input_value = "string"
+    with pytest.raises(ValueError, match="Input must be a number"):
+        area(input_value)
 
-def test_square_area_positive_side():
-    square = Square(side_length=4)
-    expected = 16
-    result = square.area()
-    assert result == expected, f"Expected {expected}, got {result}"
+def test_perimeter_with_positive_integer():
+    input_value = 9
+    expected_result = 36
+    result = perimeter(input_value)
+    assert result == expected_result, f"Expected {expected_result}, got {result}"
 
-def test_square_area_zero_side():
-    square = Square(side_length=0)
-    expected = 0
-    result = square.area()
-    assert result == expected, f"Expected {expected}, got {result}"
+def test_perimeter_with_float():
+    input_value = 1.5
+    expected_result = 6
+    result = perimeter(input_value)
+    assert result == pytest.approx(expected_result), f"Expected {expected_result}, got {result}"
 
-def test_square_area_negative_side():
-    with pytest.raises(ValueError):
-        Square(side_length=-4)
+def test_perimeter_with_negative_integer():
+    input_value = -8
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        perimeter(input_value)
 
-def test_square_perimeter_positive_side():
-    square = Square(side_length=4)
-    expected = 16  # Периметр квадрата со стороной 4
-    result = square.perimeter()
-    assert result == expected, f"Expected {expected}, got {result}"
-
-def test_square_perimeter_zero_side():
-    square = Square(side_length=0)
-    expected = 0
-    result = square.perimeter()
-    assert result == expected, f"Expected {expected}, got {result}"
-
-def test_square_perimeter_negative_side():
-    with pytest.raises(ValueError):
-        Square(side_length=-4)
+def test_perimeter_with_invalid_string():
+    input_value = "string"
+    with pytest.raises(ValueError, match="Input must be a number"):
+        perimeter(input_value)

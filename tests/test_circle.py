@@ -1,53 +1,47 @@
-# tests/test_circle.py
 import pytest
 import math
-from circle import Circle
+from circle import area, perimeter
 
-@pytest.fixture
-def circle_instance():
-    return Circle(radius=5)  # Вы можете изменить радиус по необходимости
+def test_area_with_positive_integer():
+    input_value = 4
+    expected_result = math.pi * input_value**2
+    result = area(input_value)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-def test_circle_perimeter():
-    radius = 3
-    circle = Circle(radius=radius)
-    expected_perimeter = 2 * math.pi * radius
+def test_area_with_float():
+    input_value = 2.5
+    expected_result = math.pi * input_value**2
+    result = area(input_value)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-    calculated_perimeter = circle.perimeter()
+def test_area_with_negative_integer():
+    input_value = -3
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        area(input_value)
 
-    assert calculated_perimeter == pytest.approx(
-        expected_perimeter, rel=1e-9
-    ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+def test_area_with_invalid_string():
+    input_value = "string"
+    with pytest.raises(ValueError, match="Input must be a number"):
+        area(input_value)
 
-def test_area_positive_radius():
-    # Arrange
-    radius = 3
-    expected = math.pi * radius**2  # Площадь круга с радиусом 3
+def test_perimeter_with_positive_integer():
+    input_value = 9
+    expected_result = 2 * math.pi * input_value
+    result = perimeter(input_value)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-    # Act
-    circle = Circle(radius=radius)
-    calculated_area = circle.area()
+def test_perimeter_with_float():
+    input_value = 1.5
+    expected_result = 2 * math.pi * input_value
+    result = perimeter(input_value)
+    assert math.isclose(result, expected_result, rel_tol=1e-9), f"Expected {expected_result}, got {result}"
 
-    # Assert
-    assert calculated_area == pytest.approx(
-        expected, rel=1e-9
-    ), f"Expected area {expected}, got {calculated_area}"
+def test_perimeter_with_negative_integer():
+    input_value = -8
+    with pytest.raises(ValueError, match="Input must be greater than or equal to 0"):
+        perimeter(input_value)
 
-def test_circle_area():
-    radius = 3
-    circle = Circle(radius=radius)
-    expected_area = math.pi * radius**2
-
-    calculated_area = circle.area()
-
-    assert calculated_area == pytest.approx(
-        expected_area, rel=1e-9
-    ), f"Expected area {expected_area}, got {calculated_area}"
-
-def test_circle_invalid_input():
-    invalid_radius = -3
-
-    with pytest.raises(ValueError):
-        Circle(radius=invalid_radius).perimeter()
-
-    with pytest.raises(ValueError):
-        Circle(radius=invalid_radius).area()
+def test_perimeter_with_invalid_string():
+    input_value = "string"
+    with pytest.raises(ValueError, match="Input must be a number"):
+        perimeter(input_value)
