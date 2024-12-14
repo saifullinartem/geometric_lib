@@ -1,6 +1,25 @@
 # calculate.py
 import math
 
+class Calculator:
+    def add(self, a, b):
+        """Возвращает сумму двух чисел."""
+        return a + b
+
+    def subtract(self, a, b):
+        """Возвращает разность двух чисел."""
+        return a - b
+
+    def multiply(self, a, b):
+        """Возвращает произведение двух чисел."""
+        return a * b
+
+    def divide(self, a, b):
+        """Возвращает частное двух чисел. Выбрасывает ValueError при делении на ноль."""
+        if b == 0:
+            raise ValueError("Cannot divide by zero.")
+        return a / b
+
 def circle_area(radius: float) -> float:
     """
     Вычисляет площадь круга.
