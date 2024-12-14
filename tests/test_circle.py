@@ -1,26 +1,38 @@
-
 import pytest
 from circle import Circle
+
 
 def test_circle_perimeter():
     radius = 3
     circle = Circle(radius=radius)
-    expected_perimeter = 2 * 3.141592653589793 * radius  
+    expected_perimeter = 2 * 3.141592653589793 * radius
+
+
+class TestCircle(unittest.TestCase):
+
+    def test_area_positive_radius(self):
+        # Arrange
+        radius = 3
+        expected = math.pi * radius**2  # Площадь круга с радиусом 3
 
     calculated_perimeter = circle.perimeter()
 
-    assert calculated_perimeter == pytest.approx(expected_perimeter, rel=1e-9), \
-        f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+    assert calculated_perimeter == pytest.approx(
+        expected_perimeter, rel=1e-9
+    ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+
 
 def test_circle_area():
     radius = 3
     circle = Circle(radius=radius)
-    expected_area = 3.141592653589793 * radius ** 2  
+    expected_area = 3.141592653589793 * radius**2
 
     calculated_area = circle.area()
 
-    assert calculated_area == pytest.approx(expected_area, rel=1e-9), \
-        f"Expected area {expected_area}, got {calculated_area}"
+    assert calculated_area == pytest.approx(
+        expected_area, rel=1e-9
+    ), f"Expected area {expected_area}, got {calculated_area}"
+
 
 def test_circle_invalid_input():
     invalid_radius = -3

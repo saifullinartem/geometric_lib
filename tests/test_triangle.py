@@ -3,6 +3,7 @@
 import pytest
 from triangle import Triangle
 
+
 def test_triangle_area():
     # Arrange
     base = 4
@@ -14,21 +15,29 @@ def test_triangle_area():
     calculated_area = triangle.area()
 
     # Assert
-    assert calculated_area == expected_area, f"Expected area {expected_area}, got {calculated_area}"
+    assert (
+        calculated_area == expected_area
+    ), f"Expected area {expected_area}, got {calculated_area}"
+
 
 def test_triangle_perimeter():
     # Arrange
     side_a = 3
     side_b = 4
     side_c = 5
-    triangle = Triangle(base=side_a, height=side_b, side_a=side_a, side_b=side_b, side_c=side_c)
+    triangle = Triangle(
+        base=side_a, height=side_b, side_a=side_a, side_b=side_b, side_c=side_c
+    )
     expected_perimeter = side_a + side_b + side_c  # 12
 
     # Act
     calculated_perimeter = triangle.perimeter()
 
     # Assert
-    assert calculated_perimeter == expected_perimeter, f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+    assert (
+        calculated_perimeter == expected_perimeter
+    ), f"Expected perimeter {expected_perimeter}, got {calculated_perimeter}"
+
 
 def test_triangle_invalid_input():
     # Arrange & Act & Assert
