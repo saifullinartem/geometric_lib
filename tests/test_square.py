@@ -41,7 +41,7 @@ def test_square_invalid_input():
         Square(side_length="five")
 
 
-class TestSquare(unittest.TestCase):
+class TestSquare():
     def test_area_positive_side(self):
         self.assertEqual(area(4), 16)
         self.assertEqual(area(2.5), 6.25)
