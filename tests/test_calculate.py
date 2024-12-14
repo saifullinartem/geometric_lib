@@ -11,7 +11,7 @@ def test_calculator_add():
     result = calculator.add(a, b)
 
 
-class TestCalculate(unittest.TestCase):
+class TestCalculate():
 
     def test_calculate_area_valid_circle(self):
         # Arrange
