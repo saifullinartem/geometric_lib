@@ -8,7 +8,7 @@ def test_circle_perimeter():
     expected_perimeter = 2 * 3.141592653589793 * radius
 
 
-class TestCircle(unittest.TestCase):
+class TestCircle():
 
     def test_area_positive_radius(self):
         # Arrange
